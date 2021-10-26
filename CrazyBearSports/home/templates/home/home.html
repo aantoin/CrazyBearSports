@@ -1,0 +1,51 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="">
+    <div id="home-podcast" class="container">
+        <h1>Podcast</h1>
+        <div>
+            <iframe id="podcast-iframe" src="https://anchor.fm/crazy-bear-sports/embed" height="102px" width="400px" frameborder="0" scrolling="no"></iframe>
+        </div>
+        <p>View more on <a target="_blank" href="https://anchor.fm/crazy-bear-sports/">anchor.fm</a></p>
+    </div>
+    <div class="divider"></div>
+    {% if sponsors %}
+    <div id="home-sponsor" class="container">
+        <h1>Sponsors</h1>
+        <div>
+            {% for sponsor in sponsors %}
+            {% if sponsor.url %}<a href="{{sponsor.url}}">{% endif %}<img class="" src="{{ sponsor.logo.url }}" alt="{{ sponsor.name }}">{% if sponsor.url %}</a>{% endif %}
+            {% endfor %}
+        </div>
+    </div>
+    <div class="divider"></div>
+    {% endif %}
+    <div class="home-content">
+        {% if updates %}
+            <h1>Updates</h1>
+            {% for update in updates %}
+            <div class="update-entry">
+                {{ update.content|safe }}
+            </div>
+            {% endfor %}
+        {% endif %}
+    </div>
+    {% if tickers %}
+    <div class="ticker">
+        <div class="container">
+            <div class="divider"></div>
+            <div class="carousel slide" data-ride="carousel">
+                <div class="carousel-inner">
+                    {% for ticker in tickers %}
+                    <div class="carousel-item{% if forloop.first %} active{% endif %}">
+                    <p>{{ ticker.content }}</p>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    </div>
+    {% endif %}
+</div>
+{% endblock %}

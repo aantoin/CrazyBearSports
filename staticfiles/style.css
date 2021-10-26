@@ -1,0 +1,37 @@
+
+:root {
+    --blue: #0D152E;
+    --orange: #D47C2B;
+    --dark-orange: #BF6E28;
+    --white: white;
+}
+
+.bg-blue{ background-color: var(--blue); }
+.bg-orange{ background-color: var(--orange); }
+.bg-dark-orange{ background-color: var(--dark-orange); }
+.bg-white{ background-color: var(--white); }
+
+form.c500{
+    max-width: 100%;
+    width: 500px;
+    margin-left: auto;
+    margin-right: auto;
+}
+form.c250{
+    max-width: 100%;
+    width: 250px;
+    margin-left: auto;
+    margin-right: auto;
+}
+#main-nav .nav-item:hover,
+#main-nav .dropdown-item:hover{
+    background-color: var(--dark-orange);
+}
+#main-nav .nav-link,
+#main-nav .dropdown-item{
+    color: black;
+}
+#main-nav .nav-item.active,
+#main-nav .dropdown-item.active{
+    font-weight: bold;
+}

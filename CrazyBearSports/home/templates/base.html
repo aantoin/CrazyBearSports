@@ -1,0 +1,118 @@
+{% load static %}
+{% load team_tags %}
+
+<!doctype html>
+<html lang="en">
+
+<head>
+  <!-- Global site tag (gtag.js) - Google Analytics -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-KPK3898890"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+
+    gtag('config', 'G-KPK3898890');
+  </script>
+  <!-- Required meta tags -->
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+  <!-- Bootstrap CSS -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css"
+  integrity="sha384-TX8t27EcRE3e/ihU7zmQxVncDAy5uIKz4rEkgIXeMed4M0jlfIDPvg6uqKI2xXr2" crossorigin="anonymous">
+
+  <!-- FontAwesome -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+  <link rel="stylesheet" type="text/css" href="{% static 'style.css' %}">
+  <title>Crazy Bear Sports</title>
+</head>
+
+<body class="bg-blue">
+  <header class="bg-orange">
+    <nav id="main-nav" class="container navbar navbar-expand-lg navbar-light">
+      <a class="navbar-brand" href="{% url 'index' %}">CrazyBear Sports</a>
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+        aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+
+      <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav mr-auto">
+          {% url 'index' as nav_url %}
+          <li class="nav-item {% if request.path == nav_url %}active{% endif %}">
+            <a class="nav-link" href="{{ nav_url }}">Home {% if request.path == nav_url %}<span class="sr-only">(current)</span>{% endif %}</a>
+          </li>
+          <!--
+          {% url 'stats' as nav_url %}
+          <li class="nav-item {% if request.path == nav_url %}active{% endif %}">
+            <a class="nav-link" href="{{ nav_url }}">Stats {% if request.path == nav_url %}<span class="sr-only">(current)</span>{% endif %}</a>
+          </li>
+          -->
+          {% nav_leagues as nav_leagues_list %}
+          {% for nav_league in nav_leagues_list %}
+            {% with nav_league.get_absolute_url as nav_url %}
+            <li class="nav-item {% if request.path == nav_url %}active{% endif %}">
+              <a class="nav-link" href="{{ nav_url }}">{{ nav_league.name }} {% if request.path == nav_url %}<span class="sr-only">(current)</span>{% endif %}</a>
+            </li>
+            {% endwith %}
+          {% endfor %}
+          {% nav_school_groups as nav_school_groups_list %}
+          {% if nav_school_groups_list.count > 1 %}
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                Schools
+              </a>
+              <div class="dropdown-menu bg-orange" aria-labelledby="navbarDropdown">
+                {% for nav_school_group in nav_school_groups_list %}
+                  {% with nav_school_group.get_absolute_url as nav_url %}
+                    <a class="dropdown-item {% if request.path == nav_url %}active{% endif %}" href="{{ nav_url }}">
+                      {{ nav_school_group.name }} {% if request.path == nav_url %}<span class="sr-only">(current)</span>{% endif %}
+                    </a>
+                  {% endwith %}
+                {% endfor %}
+              </div>
+            </li>
+          {% elif nav_school_groups_list.count == 1 %}
+            {% with nav_school_groups_list.0 as nav_school_group %}
+              {% with nav_school_group.get_absolute_url as nav_url %}
+                <li class="nav-item {% if request.path == nav_url %}active{% endif %}">
+                  <a class="nav-link" href="{{ nav_url }}">{{ nav_school_group.name }} {% if request.path == nav_url %}<span class="sr-only">(current)</span>{% endif %}</a>
+                </li>
+              {% endwith %}
+            {% endwith %}
+          {% endif %}
+        </ul>
+        <div class="navbar-nav">
+          <div class="nav-item">
+            {% if user.is_superuser %}
+            <a class="nav-link" href="{% url 'admin:index' %}">Admin</a>
+            {% endif %}
+          </div>
+          <div class="nav-item">
+            {% if user.is_authenticated %}
+            <a class="nav-link" href="{% url 'logout' %}">Logout</a>
+            {% else %}
+            <a class="nav-link" href="{% url 'login' %}">Login</a>
+            {% endif %}
+          </div>
+        </div>
+      </div>
+    </nav>
+  </header>
+  <main class="container bg-white py-3">
+      {% block content %}{% endblock %}
+  </main>
+
+
+  <!-- Option 1: jQuery and Bootstrap Bundle (includes Popper) -->
+  <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
+    integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
+    crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-ho+j7jyWK8fNQe+A12Hb8AhRq26LrZ/JpcUGGOn+Y7RsweNrtN/tE3MoK7ZeZDyx"
+    crossorigin="anonymous"></script>
+</body>
+
+</html>

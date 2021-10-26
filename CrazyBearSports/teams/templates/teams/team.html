@@ -1,0 +1,62 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+
+{% if user.is_superuser or user in team.admins %}
+<a href="{% url 'team_content_edit' group_type=team_group.group_type_string group=team_group.slug team=team.slug %}" class="btn btn-primary float-right">Edit</a>
+{% endif %}
+
+<h1>{{ team_group.name }} : {{ team.name }}</h1>
+
+{% with sms=team.social_media_links.all %}
+{% if sms %}
+<div class="team-social-media-box">
+    {% for sm in sms %}
+        {% if 'facebook.com' in sm.link %}<a href="{{sm.link}}" class="fa fa-facebook text-decoration-none" style="color: #3b5998"></a>
+        {% elif 'twitter.com' in sm.link %}<a href="{{sm.link}}" class="fa fa-twitter text-decoration-none" style="color: #00aced"></a>
+        {% elif 'youtube.com' in sm.link %}<a href="{{sm.link}}" class="fa fa-youtube-play text-decoration-none" style="color: #bb0000"></a>
+        {% elif 'instagram.com' in sm.link %}<a href="{{sm.link}}" class="fa fa-instagram text-decoration-none" style="color: #517fa4"></a>
+        {% else %}<a href="{{sm.link}}" class="fa fa-link text-decoration-none" style="color: #848994"></a>
+        {% endif %}
+    {% endfor %}
+</div>
+{% endif %}
+{% endwith %}
+
+
+{% if form %}
+{{ form.non_field_errors }}
+<form method="POST" >
+    {% csrf_token %}
+    {{ form.page_content.errors }}
+    {{ form.page_content | safe }}
+    {{ form.media }}
+    <input type="submit" value="Submit">
+</form>
+{% endif %}
+
+<div class="custom-content">
+{{ team.page_content|safe }}
+</div>
+
+{% with tickers=team.tickers.all %}
+{% if tickers %}
+    <div class="ticker">
+        <div class="container">
+            <div class="divider"></div>
+            <div class="carousel slide" data-ride="carousel">
+                <div class="carousel-inner">
+                    {% for ticker in tickers %}
+                    <div class="carousel-item{% if forloop.first %} active{% endif %}">
+                    <p>{{ ticker.content }}</p>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    </div>
+{% endif %}
+{% endwith %}
+
+{% endblock %}

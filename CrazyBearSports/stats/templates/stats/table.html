@@ -1,0 +1,26 @@
+{% load stat_tags %}
+<div class="table-responsive">
+    <table class="table small table-hover stat-table">
+        <thead class="thead-dark">
+            <tr>
+                <th scope="col">First Name</th>
+                <th scope="col">Last Name</th>
+                <th scope="col">Position</th>
+                {% for field in fields %}
+                <th scope="col">{{field|title}}</th>
+                {% endfor %}
+            </tr>
+        </thead>
+        <tbody>
+            {% for stat in data %}
+            <tr>
+                {% for v in stat %}
+                    {% if v != "player__id" %}
+                        <td>{{ stat|get_item:v }}</td>
+                    {% endif %}
+                {% endfor %}
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>

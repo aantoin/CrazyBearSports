@@ -1,0 +1,45 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<table>
+{% for row in values %}
+<tr>
+{% for v in row %}
+<td>{{v}}</td>
+{% endfor %}
+</tr>
+{% endfor %}
+</table>
+<p>####################</p>
+
+
+<form class="stat-upload-form" method="post">
+    <div class="table-responsive">
+    <table class="table table-sm small table-hover stat-table">
+{% for form in formset %}
+<!-- Header -->
+{% if forloop.first %}
+<thead class="thead-dark">
+        <tr>
+{% for field in form %}
+            <th scope="col">{{field.label}}</th>
+{% endfor %}
+        </tr>
+    </thead><tbody>
+{% endif %}
+<!-- Data -->
+
+        <tr>
+{% for field in form %}
+            <td>{{field}}</td>
+{% endfor %}
+        </tr>
+{% endfor %}
+</tbody>
+    </table>
+</div>
+</form>
+
+
+{% endblock %}

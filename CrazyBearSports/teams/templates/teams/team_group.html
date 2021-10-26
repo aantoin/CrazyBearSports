@@ -1,0 +1,67 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+
+<h1>{{ team_group.name }}</h1>
+
+{% with sms=team_group.social_media_links.all %}
+{% if sms %}
+<div class="team-social-media-box">
+    {% for sm in sms %}
+        {% if 'facebook.com' in sm.link %}<a href="{{sm.link}}" class="fa fa-facebook text-decoration-none" style="color: #3b5998"></a>
+        {% elif 'twitter.com' in sm.link %}<a href="{{sm.link}}" class="fa fa-twitter text-decoration-none" style="color: #00aced"></a>
+        {% elif 'youtube.com' in sm.link %}<a href="{{sm.link}}" class="fa fa-youtube-play text-decoration-none" style="color: #bb0000"></a>
+        {% elif 'instagram.com' in sm.link %}<a href="{{sm.link}}" class="fa fa-instagram text-decoration-none" style="color: #517fa4"></a>
+        {% else %}<a href="{{sm.link}}" class="fa fa-link text-decoration-none" style="color: #848994"></a>
+        {% endif %}
+    {% endfor %}
+</div>
+{% endif %}
+{% endwith %}
+
+<div class="custom-content">
+{{ team_group.page_content|safe }}
+</div>
+<h2>Teams</h2>
+<div class="container">
+<div id="team-card-group" class="row row-cols-1 row-cols-md-2 row-cols-lg-3">
+{% for team in teams %}
+    <div class="col mb-4 d-flex align-items-stretch">
+        <div class="card">
+            {% if team.card_photo %}
+            <img class="card-img-top" src="{{ team.card_photo.url }}" alt="Card image cap">
+            {% endif %}
+            <div class="card-body">
+                <p class="card-text">{{ team.name }}</p>
+                <!--<a href="{{ team.get_absolute_url }}" class="stretched-link"></a>-->
+                
+            </div><div class="card-footer text-center">
+                <a href="{{ team.get_absolute_url }}" class="btn btn-primary">Visit Team Page</a>
+            </div>
+        </div>
+    </div>
+{% endfor %}
+</div>
+</div>
+
+{% with tickers=team_group.tickers.all %}
+{% if tickers %}
+    <div class="ticker">
+        <div class="container">
+            <div class="divider"></div>
+            <div class="carousel slide" data-ride="carousel">
+                <div class="carousel-inner">
+                    {% for ticker in tickers %}
+                    <div class="carousel-item{% if forloop.first %} active{% endif %}">
+                    <p>{{ ticker.content }}</p>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    </div>
+{% endif %}
+{% endwith %}
+
+{% endblock %}

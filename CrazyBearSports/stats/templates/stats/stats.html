@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h1>UAL Stats</h1>
+<h2>Defense</h2>
+{% include 'stats/table.html' with data=DefenseStat fields=DefenseStat_field_names %}
+<h2>Quarterback</h2>
+{% include 'stats/table.html' with data=QuarterbackStat fields=QuarterbackStat_field_names %}
+<h2>Running Back</h2>
+{% include 'stats/table.html' with data=RunningBackStat fields=RunningBackStat_field_names %}
+<h2>Wide Receiver</h2>
+{% include 'stats/table.html' with data=WideReceiverStat fields=WideReceiverStat_field_names %}
+<h2>Tight End</h2>
+{% include 'stats/table.html' with data=TightEndStat fields=TightEndStat_field_names %}
+<h2>Kicker</h2>
+{% include 'stats/table.html' with data=KickerStat fields=KickerStat_field_names %}
+<h2>Kick Off</h2>
+{% include 'stats/table.html' with data=KickOffStat fields=KickOffStat_field_names %}
+<h2>Kick Return</h2>
+{% include 'stats/table.html' with data=KickReturnStat fields=KickReturnStat_field_names %}
+
+
+{% endblock %}

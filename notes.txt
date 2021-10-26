@@ -1,0 +1,4 @@
+powershell to "D:\Users\Arthur\Documents\CrazyBearSports"
+activate virtual environment with "./env/scripts/activate"
+run management commands with "py ./CrazyBearSports/manage.py runserver"
+deploy with "./scripts/deploy.sh" but maybe try ". scripts/deploy.sh" for run in powershell
